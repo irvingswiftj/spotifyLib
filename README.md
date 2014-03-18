@@ -84,3 +84,6 @@ require "SpotifyHelper.php";
 $url = \SpotifyLib\SpotifyHelper::uriTowWebPlayerUrl('spotify:artist:4pejUc4iciQfgdX6OKulQn');
 print_r($url);
 ```
+
+##License
+The BSD License. Please see [License File](https://github.com/irvingswiftj/spotifyLib/blob/master/LICENSE) for more information.
