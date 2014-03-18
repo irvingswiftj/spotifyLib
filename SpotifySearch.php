@@ -2,7 +2,6 @@
 /**
  * @file SpotifySearch.php
  * User: James Irving-Swift
- * On behalf of: Holiday Lettings Ltd
  * Date: 24/02/2014
  * Time: 14:13
  */
