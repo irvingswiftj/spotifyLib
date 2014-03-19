@@ -85,5 +85,13 @@ $url = \SpotifyLib\SpotifyHelper::uriTowWebPlayerUrl('spotify:artist:4pejUc4iciQ
 print_r($url);
 ```
 
+##Testing
+
+Unit test are currently being written
+
+##Credits
+- [irvingswiftj](https://github.com/:irvingswiftj)
+- [All Contributors](https://github.com/irvingswiftj/spotifyLib/contributors)
+
 ##License
 The BSD License. Please see [License File](https://github.com/irvingswiftj/spotifyLib/blob/master/LICENSE) for more information.
