@@ -24,12 +24,12 @@ class SpotifyLookup implements SpotifyMethod {
     private $uri;
 
     /**
-     * @var $result stdClass        the result from the api
+     * @var $result array           the result from the api
      */
     private $result;
 
     /**
-     * @var $resultInfo stdClass    the info part of the response
+     * @var $resultInfo array       the info part of the response
      */
     private $resultInfo;
 
@@ -42,7 +42,8 @@ class SpotifyLookup implements SpotifyMethod {
      * @param SpotifyApi $api       Injection of SpotifyApi
      * @param string $apiVersion    version number of the api you want to use
      */
-    public function __construct(SpotifyApi $api, $apiVersion = "1"){
+    public function __construct(SpotifyApi $api, $apiVersion = "1")
+    {
         $this->setApi($api);
         $this->getApi()->setApiVersion($apiVersion);
 
@@ -97,10 +98,10 @@ class SpotifyLookup implements SpotifyMethod {
     /**
      * Setter for private var result
      *
-     * @param $result \stdClass
+     * @param $result array
      * @return SpotifyLookup this instance of this class
      */
-    public function setResult(\stdClass $result)
+    public function setResult(array $result)
     {
         $this->result = $result;
 
@@ -133,7 +134,7 @@ class SpotifyLookup implements SpotifyMethod {
     /**
      * Getter for private var resultInfo
      *
-     * @return \SpotifyLib\stdClass
+     * @return array
      */
     public function getResultInfo()
     {
@@ -163,10 +164,12 @@ class SpotifyLookup implements SpotifyMethod {
         return $this->resultType;
     }
 
+
     /**
      * search
      *
      * @param string $uri (optional)
+     * @return array
      */
     public function search( $uri = '' ) {
 
@@ -174,19 +177,14 @@ class SpotifyLookup implements SpotifyMethod {
             $this->setUri($uri);
         }
 
-        $this->getApi()->getCurl()->setEndPoint('.json');
-        $this->getApi()->getCurl()->addParam('uri',$this->getUri());
-        $this->getApi()->getCurl()->call();
+        $response = $this->getApi()->call();
 
-        $response = $this->getApi()->getCurl()->getResponse();
+        $this->setResultInfo($response['info']);
+        $this->setResultType($response['info']['type']);
+        $this->setResult( $response[$this->getResultType()] );
 
-        if ( $response instanceof \stdClass && property_exists($response,'info')) {
+        return $this->getResult();
 
-            $this->setResultInfo($response->info);
-            $this->setResultType($this->getResultInfo()->type);
-            $this->setResult( $response->{$this->getResultType()} );
-
-        }
 
     }
 
