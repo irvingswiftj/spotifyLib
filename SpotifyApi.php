@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: james
+ * Date: 19/03/2014
+ * Time: 07:09
+ */
 
 namespace SpotifyLib;
 
@@ -7,56 +13,71 @@ namespace SpotifyLib;
  */
 class SpotifyApi
 {
-
     /**
-     * @var Curl
+     * @var array
      */
-    private $curl;
+    private $params = array();
 
     /**
-     * @var String
+     * @var string
+     */
+    private $format = '.json';
+
+    /**
+     * @var string
+     */
+    private $url = null;
+
+    /**
+     * @var string
      */
     private $apiVersion;
 
     /**
-     * @var String
+     * @var string
      */
     private $service;
 
-    public function __construct(Curl $curlClass, $service, $version){
-        $this->setCurl($curlClass);
+    /**
+     * @param $service
+     * @param $version
+     */
+    public function __construct($service, $version){
 
         $this->setService($service);
         $this->setApiVersion($version);
-        $this->getCurl()->setBaseUrl('http://ws.spotify.com/');
-        $this->getCurl()->setMethod('GET');
-        $this->getCurl()->setPrefix( $this->getService()  . '/' . $this->getApiVersion() );
+        $this->setUrl('http://ws.spotify.com/{service}/{version}/');
+
     }
 
     /**
-     * Setter for private var curl
+     * Getter for the array of parameters
      *
-     * @param $curl mixed
-     * @return SpotifyApi
+     * @return Array
      */
-    public function setCurl(Curl $curl)
+    public function getParams()
     {
-        $this->curl = $curl;
+        return $this->params;
+    }
+
+    /**
+     * @param String $url
+     * @return $this
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
 
         return $this;
     }
 
-
     /**
-     * Getter for private var curl
-     *
-     * @return Curl
+     * @return String
      */
-    public function getCurl()
+    public function getUrl()
     {
-        return $this->curl;
+        return $this->url;
     }
-
 
     /**
      * Setter for private var apiVersion
@@ -105,6 +126,66 @@ class SpotifyApi
         return $this->service;
     }
 
+    /**
+     * method to add a parameter that will be used as a GET or POST param
+     *
+     * @param $key String       the key for the parameter (i.e. 'owner_id')
+     * @param $val String       the value of the parameters
+     * @return SpotifyLib/SpotifyApi
+     */
+    public function addParam($key, $val)
+    {
+        $this->params[$key] = $val;
+
+        return $this;
+    }
+
+    /**
+     * method to remove a parameter in our array of params
+     *
+     * @param $key String the key of the parameter that you want to remove
+     * @return SpotifyLib/SpotifyApi
+     */
+    public function removeParam($key)
+    {
+        //check that the param is set before removing it!
+        if ( array_key_exists($key, $this->getParams()) ) {
+            unset($this->params[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * method to call spotify's api using guzzle
+     *
+     * @return array|boolean    array if has a understandable response else false
+     */
+    public function call()
+    {
+
+        $client = new \GuzzleHttp\Client();
+        $url    = 'http://ws.spotify.com/'. $this->getService() .'/' . $this->getApiVersion() . '/' . $this->format;
+
+        $res = $client->get($url,[
+            'query' => $this->params
+        ]);
+
+        //check if successful
+        if ($res->getStatusCode() == 200) {
+
+            if ($this->format === '.json') {
+                $returnVal = $res->json();
+            } else {
+                $returnVal = (array) $res->xml();
+            }
+
+        } else {
+            $returnVal = false;
+        }
+
+        return $returnVal;
+    }
 
 
 }

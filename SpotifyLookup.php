@@ -121,7 +121,7 @@ class SpotifyLookup implements SpotifyMethod {
     /**
      * Setter for private var resultInfo
      *
-     * @param resultInfo \SpotifyLib\stdClass
+     * @param resultInfo array
      * @return SpotifyLookup                    this instance of this class
      */
     public function setResultInfo($resultInfo)
@@ -144,7 +144,7 @@ class SpotifyLookup implements SpotifyMethod {
     /**
      * Setter for private var resultType
      *
-     * @param $resultType String
+     * @param $resultType           String
      * @return SpotifyLookup        this instance of this class
      */
     public function setResultType($resultType)
@@ -176,6 +176,8 @@ class SpotifyLookup implements SpotifyMethod {
         if ( $uri !== '') {
             $this->setUri($uri);
         }
+
+        $this->getApi()->addParam('uri',$this->getUri());
 
         $response = $this->getApi()->call();
 
