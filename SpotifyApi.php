@@ -10,6 +10,7 @@ namespace SpotifyLib;
 
 /**
  * @class SpotifyApi
+ * //TODO un-'hardcode' base url
  */
 class SpotifyApi
 {
@@ -37,6 +38,11 @@ class SpotifyApi
      * @var string
      */
     private $service;
+
+    /**
+     * @var string
+     */
+    private $endpoint = null;
 
     /**
      * @param $service
@@ -127,6 +133,52 @@ class SpotifyApi
     }
 
     /**
+     * setter for the endpoint (optional)
+     *
+     * @param string $endpoint
+     * @return $this    this instance of SpotifyApi
+     */
+    public function setEndpoint($endpoint)
+    {
+        $this->endpoint = $endpoint;
+
+        return $this;
+    }
+
+    /**
+     * getter for the endpoint
+     *
+     * @return string
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
+     * setter for the format of the response (default '.json')
+     *
+     * @param string $format
+     * @return $this    this instance of SpotifyApi
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * getter for format
+     *
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
      * method to add a parameter that will be used as a GET or POST param
      *
      * @param $key String       the key for the parameter (i.e. 'owner_id')
@@ -165,7 +217,13 @@ class SpotifyApi
     {
 
         $client = new \GuzzleHttp\Client();
-        $url    = 'http://ws.spotify.com/'. $this->getService() .'/' . $this->getApiVersion() . '/' . $this->format;
+        $url    = 'http://ws.spotify.com/'
+            . $this->getService()
+            . '/'
+            . $this->getApiVersion()
+            . '/'
+            . $this->getEndpoint()
+            . $this->getFormat();
 
         $res = $client->get($url,[
             'query' => $this->params
@@ -174,7 +232,7 @@ class SpotifyApi
         //check if successful
         if ($res->getStatusCode() == 200) {
 
-            if ($this->format === '.json') {
+            if ($this->getFormat() === '.json') {
                 $returnVal = $res->json();
             } else {
                 $returnVal = (array) $res->xml();
