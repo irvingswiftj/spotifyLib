@@ -22,14 +22,17 @@ class SpotifyApiTest extends \PHPUnit_Framework_TestCase {
         $version    = 1;
         $service    = 'lookup';
         $url        = 'http://example.com';
+        $endpoint   = 'test';
 
         $this->assertInstanceOf('SpotifyLib\SpotifyApi', $lib->setApiVersion($version));
         $this->assertInstanceOf('SpotifyLib\SpotifyApi', $lib->setService($service));
         $this->assertInstanceOf('SpotifyLib\SpotifyApi', $lib->setUrl($url));
+        $this->assertInstanceOf('SpotifyLib\SpotifyApi', $lib->setEndpoint($endpoint));
 
         $this->assertEquals($service, $lib->getService());
         $this->assertEquals($version, $lib->getApiVersion());
         $this->assertEquals($url, $lib->getUrl());
+        $this->assertEquals($endpoint, $lib->getEndpoint());
 
     }
 
