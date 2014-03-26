@@ -121,10 +121,10 @@ class SpotifyLookup implements SpotifyMethod {
     /**
      * Setter for private var resultInfo
      *
-     * @param resultInfo array
-     * @return SpotifyLookup                    this instance of this class
+     * @param $resultInfo array     info in the result
+     * @return SpotifyLookup        this instance of this class
      */
-    public function setResultInfo($resultInfo)
+    public function setResultInfo(array $resultInfo)
     {
         $this->resultInfo = $resultInfo;
 
