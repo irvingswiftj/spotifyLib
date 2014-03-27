@@ -68,8 +68,6 @@ class SpotifyLookupTest extends \PHPUnit_Framework_TestCase {
             )
         );
 
-        // Create a mock for the Observer class,
-        // only mock the update() method.
         $mock = $this->getMock(
             $classToMock,
             $methodsToMock,

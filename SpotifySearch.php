@@ -67,11 +67,6 @@ class SpotifySearch implements SpotifyMethod {
     private $trackSearchResultInfo;
 
     /**
-     * @var $queryString String                 will be set for the string to query
-     */
-    private $queryString;
-
-    /**
      * @var $pageNumber Integer                 the page number of results you want
      */
     private $pageNumber;
@@ -158,10 +153,10 @@ class SpotifySearch implements SpotifyMethod {
     /**
      * Setter for private var artistSearchResultInfo
      *
-     * @param $artistSearchResultInfo \stdClass  the decoded info section of the artist search
+     * @param $artistSearchResultInfo array  the decoded info section of the artist search
      * @return SpotifySearch this instance of this class
      */
-    public function setArtistSearchResultInfo(\stdClass $artistSearchResultInfo)
+    public function setArtistSearchResultInfo(array $artistSearchResultInfo)
     {
         $this->artistSearchResultInfo = $artistSearchResultInfo;
 
@@ -171,7 +166,7 @@ class SpotifySearch implements SpotifyMethod {
     /**
      * Getter for private var artistSearchResultInfo
      *
-     * @return \stdClass
+     * @return array
      */
     public function getArtistSearchResultInfo()
     {
@@ -181,7 +176,7 @@ class SpotifySearch implements SpotifyMethod {
     /**
      * Setter for private var album
      *
-     * @param ablum String
+     * @param $album String
      * @return SpotifySearch this instance of this class
      */
     public function setAlbum($album)
@@ -227,10 +222,10 @@ class SpotifySearch implements SpotifyMethod {
     /**
      * Setter for private var albumSearchResultInfo
      *
-     * @param $albumSearchResultInfo \stdClass  the info section of the response
+     * @param $albumSearchResultInfo array  the info section of the response
      * @return SpotifySearch                    this instance of this class
      */
-    public function setAlbumSearchResultInfo(\stdClass $albumSearchResultInfo)
+    public function setAlbumSearchResultInfo(array $albumSearchResultInfo)
     {
         $this->albumSearchResultInfo = $albumSearchResultInfo;
 
@@ -296,10 +291,10 @@ class SpotifySearch implements SpotifyMethod {
     /**
      * Setter for private var trackSearchResultInfo
      *
-     * @param $trackSearchResultInfo \stdClass
+     * @param $trackSearchResultInfo array
      * @return SpotifySearch this instance of this class
      */
-    public function setTrackSearchResultInfo(\stdClass $trackSearchResultInfo)
+    public function setTrackSearchResultInfo(array $trackSearchResultInfo)
     {
         $this->trackSearchResultInfo = $trackSearchResultInfo;
 
@@ -331,7 +326,7 @@ class SpotifySearch implements SpotifyMethod {
 
         $this->pageNumber = $pageNumber;
 
-        $this->getApi()->getCurl()->addParam('page',$this->getPageNumber());
+        $this->getApi()->addParam('page',$this->getPageNumber());
 
         return $this;
     }
@@ -346,37 +341,13 @@ class SpotifySearch implements SpotifyMethod {
         return $this->pageNumber;
     }
 
-    /**
-     * Setter for private var queryString
-     *
-     * @param $queryString String
-     * @return SpotifySearch        this instance of this class
-     */
-    public function setQueryString($queryString)
-    {
-        $this->queryString = $queryString;
-
-        $this->getApi()->getCurl()->addParam('q',$this->getQueryString());
-
-        return $this;
-    }
-
-    /**
-     * Getter for private var queryString
-     *
-     * @return String
-     */
-    public function getQueryString()
-    {
-        return $this->queryString;
-    }
-
 
 
     /**
      * searchArtist
      *
      * @param string $artist
+     * @return array|null
      */
     public function searchArtist( $artist = '' ) {
 
@@ -384,19 +355,21 @@ class SpotifySearch implements SpotifyMethod {
             $this->setArtist($artist);
         }
 
-        $this->getApi()->getCurl()->setEndPoint('artist.json');
-        $this->setQueryString($this->getArtist());
-        $this->getApi()->getCurl()->call();
+        $this->getApi()->setService('search');
+        $this->getApi()->setEndpoint('artist');
+        $this->getApi()->addParam('q', $this->getArtist());
+        $this->getApi()->addParam('page', $this->pageNumber);
+        $response = $this->getApi()->call();
 
-        $response = $this->getApi()->getCurl()->getResponse();
-
-        if ( property_exists($response, 'info')) {
-            $this->setArtistSearchResultInfo($response->info);
+        if ( array_key_exists('info' , $response)) {
+            $this->setArtistSearchResultInfo($response['info']);
         }
 
-        if ( property_exists($response, 'artists')) {
-            $this->setArtistSearchResult($response->artists);
+        if ( array_key_exists('artists', $response)) {
+            $this->setArtistSearchResult($response['artists']);
         }
+
+        return $this->getArtistSearchResult();
     }
 
 
@@ -404,6 +377,7 @@ class SpotifySearch implements SpotifyMethod {
      * searchAlbum
      *
      * @param string $album     Album name to search
+     * @return array|null
      */
     public function searchAlbum( $album = '' ) {
 
@@ -411,19 +385,21 @@ class SpotifySearch implements SpotifyMethod {
             $this->setAlbum($album);
         }
 
-        $this->getApi()->getCurl()->setEndPoint('album.json');
-        $this->setQueryString($this->getAlbum());
-        $this->getApi()->getCurl()->call();
+        $this->getApi()->setService('search');
+        $this->getApi()->setEndpoint('album');
+        $this->getApi()->addParam('q', $this->getAlbum());
+        $this->getApi()->addParam('page', $this->pageNumber);
+        $response = $this->getApi()->call();
 
-        $response = $this->getApi()->getCurl()->getResponse();
-
-        if ( property_exists($response, 'info')) {
-            $this->setAlbumSearchResultInfo($response->info);
+        if ( array_key_exists('info', $response)) {
+            $this->setAlbumSearchResultInfo($response['info']);
         }
 
-        if ( property_exists($response, 'albums')) {
-            $this->setAlbumSearchResult($response->albums);
+        if ( array_key_exists('albums', $response)) {
+            $this->setAlbumSearchResult($response['albums']);
         }
+
+        return $this->getArtistSearchResult();
     }
 
 
@@ -431,6 +407,7 @@ class SpotifySearch implements SpotifyMethod {
      * searchTrack
      *
      * @param string $track     Track name to search
+     * @return array|null
      */
     public function searchTrack( $track = '' ) {
 
@@ -438,18 +415,20 @@ class SpotifySearch implements SpotifyMethod {
             $this->setTrack($track);
         }
 
-        $this->getApi()->getCurl()->setEndPoint('track.json');
-        $this->setQueryString($this->getTrack());
-        $this->getApi()->getCurl()->call();
+        $this->getApi()->setService('search');
+        $this->getApi()->setEndpoint('track');
+        $this->getApi()->addParam('q', $this->getTrack());
+        $this->getApi()->addParam('page', $this->pageNumber);
+        $response = $this->getApi()->call();
 
-        $response = $this->getApi()->getCurl()->getResponse();
-
-        if ( property_exists($response, 'info')) {
-            $this->setTrackSearchResultInfo($response->info);
+        if ( array_key_exists('info', $response)) {
+            $this->setTrackSearchResultInfo($response['info']);
         }
 
-        if ( property_exists($response, 'tracks')) {
-            $this->setTrackSearchResult($response->tracks);
+        if ( array_key_exists('tracks', $response)) {
+            $this->setTrackSearchResult($response['tracks']);
         }
+
+        return $this->getTrackSearchResult();
     }
 } 
