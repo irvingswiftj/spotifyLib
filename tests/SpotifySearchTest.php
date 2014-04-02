@@ -128,11 +128,22 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
         $callMockConstructor    = true;
         $mockResponse           = array(
             'info' => array(
-                'type' => 'artist'
+                "num_results" => 34,
+                "limit" => 100,
+                "offset" => 0,
+                "query" => "foo",
+                "type" => "albums",
+                "page" => 1
             ),
-            'artist' => array(
-                'href' => 'spotify:artist:4pejUc4iciQfgdX6OKulQn',
-                'name' => 'Queens Of The Stone Age'
+            'albums' => array(
+                array(
+                    'href' => 'spotify:artist:4pejUc4iciQfgdX6OKulQn',
+                    'name' => 'Queens Of The Stone Age'
+                ),
+                array(
+                    'href' => 'spotify:artist:testing',
+                    'name' => 'froufrou'
+                )
             )
         );
 
@@ -152,8 +163,11 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
 
         $result = $search->searchAlbum('test');
 
-        //TODO assert results
-        //$this->assertTrue(is_array($result));
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($mockResponse['info'], $search->getAlbumSearchResultInfo());
+        $this->assertTrue(is_array($result[0]));
+        $this->assertTrue(array_key_exists('href', $result[0]));
+        $this->assertTrue(array_key_exists('name', $result[0]));
     }
 
     /**
@@ -168,11 +182,22 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
         $callMockConstructor    = true;
         $mockResponse           = array(
             'info' => array(
-                'type' => 'artist'
+                "num_results" => 34,
+                "limit" => 100,
+                "offset" => 0,
+                "query" => "foo",
+                "type" => "tracks",
+                "page" => 1
             ),
-            'artist' => array(
-                'href' => 'spotify:artist:4pejUc4iciQfgdX6OKulQn',
-                'name' => 'Queens Of The Stone Age'
+            'tracks' => array(
+                array(
+                    'href' => 'spotify:artist:4pejUc4iciQfgdX6OKulQn',
+                    'name' => 'Queens Of The Stone Age'
+                ),
+                array(
+                    'href' => 'spotify:artist:testing',
+                    'name' => 'froufrou'
+                )
             )
         );
 
@@ -192,7 +217,10 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
 
         $result = $search->searchTrack('test');
 
-        //TODO assert results
-        //$this->assertTrue(is_array($result));
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($mockResponse['info'], $search->getTrackSearchResultInfo());
+        $this->assertTrue(is_array($result[0]));
+        $this->assertTrue(array_key_exists('href', $result[0]));
+        $this->assertTrue(array_key_exists('name', $result[0]));
     }
 }
