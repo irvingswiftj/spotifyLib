@@ -9,8 +9,8 @@ Here are some examples:
 
 ###Dependancies
 ```
-require 'Curl.php';
-require 'SpotifyApi.php';
+require 'vendor/autoload.php';
+require "SpotifyApi.php";
 ```
 
 
@@ -19,75 +19,65 @@ require 'SpotifyApi.php';
 ```
 require "SpotifySearch.php";
 
-//create a new instance of the spotify api with the service set to 'search'
-$searchApi = new \SpotifyLib\SpotifyApi(new \SpotifyLib\Curl(),'search',1);
+//create a new instance of the spotify api with the service set to 'lookup'
+$searchApi = new \SpotifyLib\SpotifyApi('search',1);
 
-//create a new search class and inject our spotify api instance
+//create a new SpotifyLookup class instance and inject our spotify api instance
 $search = new \SpotifyLib\SpotifySearch($searchApi);
 
-//Searching for Artist, album and Tracks are all done in the same manner
-//  here is an example of each:
+//Search for an artist
+$artist = 'Foo Fighters';
 
-echo "searching artist:";
+echo "search results for $artist:";
 
-$search->searchArtist('queens of the stone age');
-print_r($search->getArtistSearchResultInfo());
-print_r($search->getArtistSearchResult());
-echo "searching album:";
+$result = $search->searchArtist($artist);
 
-$search->searchAlbum('L.A. Woman');
-print_r($search->getAlbumSearchResultInfo());
-print_r($search->getAlbumSearchResult());
+var_dump($result);
 
-echo "searching track:";
 
-$search->searchTrack('Walking in Memphis');
-print_r($search->getTrackSearchResultInfo());
-print_r($search->getTrackSearchResult());
-//this library supports spotify's pagination and can be used by using the SpotifySearch::setPageNumber() method
+//Search for an album
+$album = 'Take this to the skies';
 
-$search->setPageNumber(4);
-$search->searchTrack(); // if parameter in a search method is blank it will re-search for what last last search unless you use SpoifySearch::set{searchType}() is used first
-print_r($search->getTrackSearchResultInfo());
+echo "search results for $album:";
 
-//other ways to use this class:
+$result = $search->searchAlbum($album);
 
-$result = $search->setArtist('Oasis')
-                 ->setPageNumber(1)
-                 ->searchArtist();
-print_r($result);
-```
+var_dump($result);
+
+
+//Search for a track
+$track = 'New Pin';
+
+echo "search results for $track:";
+
+$result = $search->searchTrack($track);
+
+var_dump($result);
 
 ###Using the lookup api
 ```
 require "SpotifyLookup.php";
 
 //create a new instance of the spotify api with the service set to 'lookup'
-$lookupApi = new \SpotifyLib\SpotifyApi(new \SpotifyLib\Curl(),'lookup',1);
+$Api = new \SpotifyLib\SpotifyApi('lookup',1);
 
 //create a new SpotifyLookup class instance and inject our spotify api instance
-$lookup = new \SpotifyLib\SpotifyLookup($lookupApi);
+$lookup = new \SpotifyLib\SpotifyLookup($Api);
 
-//search using the uri have you have
-$uri = 'spotify:artist:4pejUc4iciQfgdX6OKulQn';
-$lookup->search($uri);
+$uri = "spotify:artist:7jy3rLJdDQY21OgRLCZ9sD";
 
-echo "search results for $uri:";
-print_r($lookup->getResult());
+echo "lookup result for $uri:";
+
+$result = $lookup->search($uri);
+
+var_dump($result);
 ```
 
-###Using the helper
 
- ```
-require "SpotifyHelper.php";
-
-$url = \SpotifyLib\SpotifyHelper::uriTowWebPlayerUrl('spotify:artist:4pejUc4iciQfgdX6OKulQn');
-print_r($url);
-```
 
 ##Testing
 
-Unit test are currently being written
+Unit tests can be found in the test directory
 
 ##Credits
 - [irvingswiftj](https://github.com/:irvingswiftj)
