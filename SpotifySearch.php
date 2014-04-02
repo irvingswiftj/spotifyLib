@@ -399,7 +399,7 @@ class SpotifySearch implements SpotifyMethod {
             $this->setAlbumSearchResult($response['albums']);
         }
 
-        return $this->getArtistSearchResult();
+        return $this->getAlbumSearchResult();
     }
 
 
