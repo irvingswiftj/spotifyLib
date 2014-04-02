@@ -58,6 +58,7 @@ echo "search results for $track:";
 $result = $search->searchTrack($track);
 
 var_dump($result);
+```
 
 ###Using the lookup api
 ```
