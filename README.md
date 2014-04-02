@@ -8,6 +8,11 @@ PHP Library for using Spotify's API
 Here are some examples:
 
 ###Dependancies
+
+Please run composer.json to install required dependencies
+
+
+This need to be in the top of your file
 ```
 require 'vendor/autoload.php';
 require "SpotifyApi.php";
@@ -77,7 +82,7 @@ var_dump($result);
 
 ##Testing
 
-Unit tests can be found in the test directory
+Unit tests can be found in the test directory and PHPUnit can be run for the root directory
 
 ##Credits
 - [irvingswiftj](https://github.com/:irvingswiftj)
