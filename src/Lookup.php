@@ -6,15 +6,12 @@
  * Time: 07:23
  */
 
-namespace SpotifyLib;
+namespace Swifty\Spotify;
 
-require "SpotifyMethod.php";
-
-class SpotifyLookup implements SpotifyMethod {
+class Lookup {
 
     /**
-     * @var $api    /SpotifyLib/SpotifyApi  api Class to use
-     *
+     * @var API $api
      */
     private $api;
 
@@ -39,10 +36,10 @@ class SpotifyLookup implements SpotifyMethod {
     private $resultType;
 
     /**
-     * @param SpotifyApi $api       Injection of SpotifyApi
+     * @param API $api       Injection of API
      * @param string $apiVersion    version number of the api you want to use
      */
-    public function __construct(SpotifyApi $api, $apiVersion = "1")
+    public function __construct(API $api, $apiVersion = "1")
     {
         $this->setApi($api);
         $this->getApi()->setApiVersion($apiVersion);
@@ -52,10 +49,10 @@ class SpotifyLookup implements SpotifyMethod {
     /**
      * Setter for private var api
      *
-     * @param SpotifyApi $api    instance of the spotify api class
+     * @param API $api    instance of the spotify api class
      * @return SpotifySearch    this instance of this class
      */
-    public function setApi(SpotifyApi $api)
+    public function setApi(API $api)
     {
         $this->api = $api;
 
@@ -65,7 +62,7 @@ class SpotifyLookup implements SpotifyMethod {
     /**
      * Getter for private var api
      *
-     * @return SpotifyApi
+     * @return API
      */
     public function getApi()
     {
@@ -99,7 +96,7 @@ class SpotifyLookup implements SpotifyMethod {
      * Setter for private var result
      *
      * @param $result array
-     * @return SpotifyLookup this instance of this class
+     * @return this
      */
     public function setResult(array $result)
     {
@@ -122,7 +119,7 @@ class SpotifyLookup implements SpotifyMethod {
      * Setter for private var resultInfo
      *
      * @param $resultInfo array     info in the result
-     * @return SpotifyLookup        this instance of this class
+     * @return this
      */
     public function setResultInfo(array $resultInfo)
     {
@@ -145,7 +142,7 @@ class SpotifyLookup implements SpotifyMethod {
      * Setter for private var resultType
      *
      * @param $resultType           String
-     * @return SpotifyLookup        this instance of this class
+     * @return this
      */
     public function setResultType($resultType)
     {

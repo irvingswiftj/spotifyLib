@@ -1,23 +1,11 @@
 <?php
-/**
- * @file SpotifySearch.php
- * User: James Irving-Swift
- * Date: 24/02/2014
- * Time: 14:13
- */
 
-namespace SpotifyLib;
+namespace Swifty\Spotify;
 
-require "SpotifyMethod.php";
-
-/**
- * @class SpotifySearch
- */
-class SpotifySearch implements SpotifyMethod {
+class Search {
 
     /**
-     * @var $api    /SpotifyLib/SpotifyApi  api Class to use
-     *
+     * @var API $api
      */
     private $api;
 
@@ -72,10 +60,10 @@ class SpotifySearch implements SpotifyMethod {
     private $pageNumber;
 
     /**
-     * @param SpotifyApi $api       Injection of SpotifyApi
+     * @param API $api       Injection of API
      * @param string $apiVersion    version number of the api you want to use
      */
-    public function __construct(SpotifyApi $api, $apiVersion = "1"){
+    public function __construct(API $api, $apiVersion = "1"){
         $this->setApi($api);
         $this->getApi()->setApiVersion($apiVersion);
 
@@ -84,10 +72,10 @@ class SpotifySearch implements SpotifyMethod {
     /**
      * Setter for private var api
      *
-     * @param SpotifyApi $api    instance of the spotify api class
-     * @return SpotifySearch    this instance of this class
+     * @param API $api    instance of the spotify api class
+     * @return this
      */
-    public function setApi(SpotifyApi $api)
+    public function setApi(API $api)
     {
         $this->api = $api;
 
@@ -97,7 +85,7 @@ class SpotifySearch implements SpotifyMethod {
     /**
      * Getter for private var api
      *
-     * @return SpotifyApi
+     * @return API
      */
     public function getApi()
     {
@@ -108,7 +96,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var artist
      *
      * @param $artist string     artist to search for
-     * @return SpotifySearch     this instance of this class
+     * @return this
      */
     public function setArtist($artist)
     {
@@ -131,7 +119,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var artistSearchResult
      *
      * @param $artistSearchResult Array     search results from the artist search
-     * @return SpotifySearch                this instance of this class
+     * @return this
      */
     public function setArtistSearchResult(Array $artistSearchResult)
     {
@@ -154,7 +142,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var artistSearchResultInfo
      *
      * @param $artistSearchResultInfo array  the decoded info section of the artist search
-     * @return SpotifySearch this instance of this class
+     * @return this
      */
     public function setArtistSearchResultInfo(array $artistSearchResultInfo)
     {
@@ -177,7 +165,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var album
      *
      * @param $album String
-     * @return SpotifySearch this instance of this class
+     * @return this
      */
     public function setAlbum($album)
     {
@@ -200,7 +188,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var albumSearchResult
      *
      * @param $albumSearchResult Array
-     * @return SpotifySearch this instance of this class
+     * @return this
      */
     public function setAlbumSearchResult(array $albumSearchResult)
     {
@@ -223,7 +211,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var albumSearchResultInfo
      *
      * @param $albumSearchResultInfo array  the info section of the response
-     * @return SpotifySearch                    this instance of this class
+     * @return this
      */
     public function setAlbumSearchResultInfo(array $albumSearchResultInfo)
     {
@@ -246,7 +234,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var track
      *
      * @param $track String
-     * @return SpotifySearch this instance of this class
+     * @return this
      */
     public function setTrack($track)
     {
@@ -269,7 +257,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var trackSearchResult
      *
      * @param $trackSearchResult Array
-     * @return SpotifySearch this instance of this class
+     * @return this
      */
     public function setTrackSearchResult(array $trackSearchResult)
     {
@@ -292,7 +280,7 @@ class SpotifySearch implements SpotifyMethod {
      * Setter for private var trackSearchResultInfo
      *
      * @param $trackSearchResultInfo array
-     * @return SpotifySearch this instance of this class
+     * @return this
      */
     public function setTrackSearchResultInfo(array $trackSearchResultInfo)
     {
@@ -316,7 +304,7 @@ class SpotifySearch implements SpotifyMethod {
      *
      * @param $pageNumber int
      * @throws \Exception       if page number is not numeric
-     * @return SpotifySearch    this instance of this class
+     * @return this
      */
     public function setPageNumber($pageNumber)
     {

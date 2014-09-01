@@ -6,18 +6,16 @@
  * Time: 10:18
  */
 
-namespace SpotifyLib;
+namespace Swifty\Spotify;
 
-require_once 'SpotifyLookup.php';
-
-class SpotifyLookupTest extends \PHPUnit_Framework_TestCase {
+class LookupTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * test our setters and getters
      */
     public function testSettersAndGetters() {
 
-        $classToMock            = '\SpotifyLib\SpotifyApi';
+        $classToMock            = '\Swifty\Spotify\API';
         $methodsToMock          = array();
         $mockConstructorParams  = array('lookup', 1);
         $mockClassName          = 'Foo';
@@ -33,16 +31,16 @@ class SpotifyLookupTest extends \PHPUnit_Framework_TestCase {
             $callMockConstructor
         );
 
-        $sl = new SpotifyLookup($mock);
+        $sl = new Lookup($mock);
 
-        $this->assertInstanceOf('SpotifyLib\SpotifyLookup', $sl->setUri('123453'));
-        $this->assertInstanceOf('SpotifyLib\SpotifyLookup', $sl->setApi($mock));
-        $this->assertInstanceOf('SpotifyLib\SpotifyLookup', $sl->setResult(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifyLookup', $sl->setResultInfo(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifyLookup', $sl->setResultType('type'));
+        $this->assertInstanceOf('Swifty\Spotify\Lookup', $sl->setUri('123453'));
+        $this->assertInstanceOf('Swifty\Spotify\Lookup', $sl->setAPI($mock));
+        $this->assertInstanceOf('Swifty\Spotify\Lookup', $sl->setResult(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Lookup', $sl->setResultInfo(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Lookup', $sl->setResultType('type'));
 
         $this->assertEquals('123453', $sl->getUri());
-        $this->assertEquals($mock, $sl->getApi());
+        $this->assertEquals($mock, $sl->getAPI());
         $this->assertEquals(array(), $sl->getResult());
         $this->assertEquals(array(), $sl->getResultInfo());
         $this->assertEquals('type', $sl->getResultType());
@@ -53,7 +51,7 @@ class SpotifyLookupTest extends \PHPUnit_Framework_TestCase {
      */
     public function testSearch()
     {
-        $classToMock            = '\SpotifyLib\SpotifyApi';
+        $classToMock            = '\Swifty\Spotify\API';
         $methodsToMock          = array('call');
         $mockConstructorParams  = array('lookup', 1);
         $mockClassName          = 'Foo';
@@ -80,7 +78,7 @@ class SpotifyLookupTest extends \PHPUnit_Framework_TestCase {
             ->method('call')
             ->will($this->returnValue($mockResponse));
 
-        $sl = new SpotifyLookup($mock);
+        $sl = new Lookup($mock);
         $result = $sl->search('abc:qwe:123');
 
         $this->assertTrue(is_array($result));

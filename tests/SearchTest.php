@@ -6,15 +6,13 @@
  * Time: 23:05
  */
 
-namespace SpotifyLib;
+namespace Swifty\Spotify;
 
-require_once 'SpotifySearch.php';
-
-class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
+class SearchTest extends \PHPUnit_Framework_TestCase {
 
     public function testSettersAndGetters()
     {
-        $classToMock            = '\SpotifyLib\SpotifyApi';
+        $classToMock            = '\Swifty\Spotify\API';
         $methodsToMock          = array();
         $mockConstructorParams  = array('lookup', 1);
         $mockClassName          = 'Foo';
@@ -30,26 +28,26 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
             $callMockConstructor
         );
 
-        $search = new SpotifySearch($mock);
+        $search = new Search($mock);
 
         $artist     = '65daysofstatic';
         $album      = 'We were exploding away';
         $track      = 'Tiger Girl';
         $pageNumber = 12;
 
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setApi($mock));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setAlbum($album));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setAlbumSearchResult(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setAlbumSearchResultInfo(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setArtist($artist));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setArtistSearchResult(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setArtistSearchResultInfo(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setTrack($track));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setTrackSearchResult(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setTrackSearchResultInfo(array()));
-        $this->assertInstanceOf('SpotifyLib\SpotifySearch', $search->setPageNumber($pageNumber));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setAPI($mock));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setAlbum($album));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setAlbumSearchResult(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setAlbumSearchResultInfo(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setArtist($artist));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setArtistSearchResult(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setArtistSearchResultInfo(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setTrack($track));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setTrackSearchResult(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setTrackSearchResultInfo(array()));
+        $this->assertInstanceOf('Swifty\Spotify\Search', $search->setPageNumber($pageNumber));
 
-        $this->assertEquals($mock, $search->getApi());
+        $this->assertEquals($mock, $search->getAPI());
         $this->assertEquals($album, $search->getAlbum());
         $this->assertEquals(array(), $search->getAlbumSearchResult());
         $this->assertEquals(array(), $search->getAlbumSearchResultInfo());
@@ -67,10 +65,10 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
      */
     public function testSearchArtist()
     {
-        $classToMock            = '\SpotifyLib\SpotifyApi';
+        $classToMock            = '\Swifty\Spotify\API';
         $methodsToMock          = array('call');
         $mockConstructorParams  = array('search', 1);
-        $mockClassName          = 'SearchArtistApi';
+        $mockClassName          = 'SearchArtistAPI';
         $callMockConstructor    = true;
         $mockResponse           = array(
             'info' => array(
@@ -105,7 +103,7 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
             ->method('call')
             ->will($this->returnValue($mockResponse));
 
-        $search = new SpotifySearch($mock);
+        $search = new Search($mock);
 
         $result = $search->searchArtist('test');
 
@@ -121,10 +119,10 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
      */
     public function testSearchAlbum()
     {
-        $classToMock            = '\SpotifyLib\SpotifyApi';
+        $classToMock            = '\Swifty\Spotify\API';
         $methodsToMock          = array('call');
         $mockConstructorParams  = array('search', 1);
-        $mockClassName          = 'SearchAlbumApi';
+        $mockClassName          = 'SearchAlbumAPI';
         $callMockConstructor    = true;
         $mockResponse           = array(
             'info' => array(
@@ -159,7 +157,7 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
             ->method('call')
             ->will($this->returnValue($mockResponse));
 
-        $search = new SpotifySearch($mock);
+        $search = new Search($mock);
 
         $result = $search->searchAlbum('test');
 
@@ -175,10 +173,10 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
      */
     public function testSearchTrack()
     {
-        $classToMock            = '\SpotifyLib\SpotifyApi';
+        $classToMock            = '\Swifty\Spotify\API';
         $methodsToMock          = array('call');
         $mockConstructorParams  = array('search', 1);
-        $mockClassName          = 'SearchTrackApi';
+        $mockClassName          = 'SearchTrackAPI';
         $callMockConstructor    = true;
         $mockResponse           = array(
             'info' => array(
@@ -213,7 +211,7 @@ class SpotifySearchTest extends \PHPUnit_Framework_TestCase {
             ->method('call')
             ->will($this->returnValue($mockResponse));
 
-        $search = new SpotifySearch($mock);
+        $search = new Search($mock);
 
         $result = $search->searchTrack('test');
 

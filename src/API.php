@@ -6,13 +6,13 @@
  * Time: 07:09
  */
 
-namespace SpotifyLib;
+namespace Swifty\Spotify;
 
 /**
- * @class SpotifyApi
+ * @class API
  * //TODO un-'hardcode' base url
  */
-class SpotifyApi
+class API
 {
     /**
      * @var array
@@ -89,7 +89,7 @@ class SpotifyApi
      * Setter for private var apiVersion
      *
      * @param   $apiVersion String          version of the api (allowing string in case 1.1 comes out)
-     * @return  \SpotifyLib\SpotifyApi      this instance of this class
+     * @return  this
      */
     public function setApiVersion($apiVersion)
     {
@@ -113,7 +113,7 @@ class SpotifyApi
      * Setter for the spotify service you want to use
      *
      * @param $service String   the service
-     * @return SpotifyApi       this instance of this class
+     * @return this
      */
     public function setService($service)
     {
@@ -136,7 +136,7 @@ class SpotifyApi
      * setter for the endpoint (optional)
      *
      * @param string $endpoint
-     * @return $this    this instance of SpotifyApi
+     * @return this
      */
     public function setEndpoint($endpoint)
     {
@@ -159,7 +159,7 @@ class SpotifyApi
      * setter for the format of the response (default '.json')
      *
      * @param string $format
-     * @return $this    this instance of SpotifyApi
+     * @return this
      */
     public function setFormat($format)
     {
@@ -183,7 +183,7 @@ class SpotifyApi
      *
      * @param $key String       the key for the parameter (i.e. 'owner_id')
      * @param $val String       the value of the parameters
-     * @return SpotifyLib/SpotifyApi
+     * @return this
      */
     public function addParam($key, $val)
     {
@@ -196,7 +196,7 @@ class SpotifyApi
      * method to remove a parameter in our array of params
      *
      * @param $key String the key of the parameter that you want to remove
-     * @return SpotifyLib/SpotifyApi
+     * @return this
      */
     public function removeParam($key)
     {

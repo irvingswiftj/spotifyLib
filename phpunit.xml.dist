@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit
+    stopOnError="true"
+    stopOnFailure="true"
+    bootstrap="./vendor/autoload.php"
+    colors="true">
+    <testsuites>
+        <testsuite name="Swifty\Spotify*">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

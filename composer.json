@@ -1,8 +1,33 @@
 {
+    "name": "irvingswiftj/spotifyLib",
+    "type": "library",
+    "description": "Spotify client",
+    "keywords": ["spotify"],
+    "homepage": "https://github.com/irvingswiftj/spotifyLib",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "James Irving-Swift",
+            "email": "james@irving-swift.com",
+            "homepage": "https://irving-swift.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Meta Markers",
+            "email": "metamarkers@gmail.com",
+            "homepage": "https://github.com/magicmarkers",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "guzzlehttp/guzzle": "~4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Swifty\\Spotify\\": "src/"
+        }
     }
 }

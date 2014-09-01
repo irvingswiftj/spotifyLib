@@ -1,18 +1,8 @@
 <?php
-/**
- * @file SpotifyHelper.php
- * User: James Irving-Swift
- * Date: 01/03/2014
- * Time: 09:34
- */
 
-namespace SpotifyLib;
+namespace Swifty\Spotify;
 
-/**
- * @class SpotifyHelper
- * @package SpotifyLib
- */
-class SpotifyHelper {
+class Helper {
 
     const DEFAULT_WEBP_PLAYER_URL = 'open.spotify.com';
 
